@@ -51,6 +51,7 @@ The solution is designed to be:
 6. Orchestrate daily execution with Airflow  
 
 ## Architecture Overview
+```mermaid
 flowchart LR
     DB1[(SQL DB 1)]
     DB2[(SQL DB 2)]
@@ -68,13 +69,15 @@ flowchart LR
 
     subgraph Airflow
         D[DAG Scheduling]
-        S[Secrets Backend<br/>(CyberArk)]
+        S[Secrets Backend (CyberArk)]
     end
 
     D --> E
     S --> E
+```
 
 ## Repository Structure
+```
 excel-report-consolidation/
 ├── dags/
 │ └── files_consolidation_dag.py
@@ -84,6 +87,7 @@ excel-report-consolidation/
 │ └── sample_outputs/
 ├── requirements.txt
 └── README.md
+```
 
 ## Running Locally
 pip install -r requirements.txt
@@ -121,6 +125,7 @@ By default, the pipeline runs in local mode and creates mock SQLite databases fo
 
 # Author
 Adrianna Beblowska
+
 
 
 
