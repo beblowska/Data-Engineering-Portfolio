@@ -90,9 +90,9 @@ excel-report-consolidation/
 ```
 
 ## Running Locally
-pip install -r requirements.txt
-python jobs/files_consolidation.py
-By default, the pipeline runs in local mode and creates mock SQLite databases for development and testing.
+- pip install -r requirements.txt
+- python jobs/files_consolidation.py
+- By default, the pipeline runs in local mode and creates mock SQLite databases for development and testing.
 
 # Airflow Execution
 - The DAG report_comparison runs daily.
@@ -125,6 +125,7 @@ By default, the pipeline runs in local mode and creates mock SQLite databases fo
 
 # Author
 Adrianna Beblowska
+
 
 
 
