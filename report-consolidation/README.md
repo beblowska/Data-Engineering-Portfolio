@@ -69,7 +69,7 @@ flowchart LR
 
     subgraph Airflow
         D[DAG Scheduling]
-        S[Secrets Backend (CyberArk)]
+        S[Secrets Backend - CyberArk]
     end
 
     D --> E
@@ -125,6 +125,7 @@ By default, the pipeline runs in local mode and creates mock SQLite databases fo
 
 # Author
 Adrianna Beblowska
+
 
 
 
