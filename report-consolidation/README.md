@@ -54,9 +54,9 @@ report-consolidation/
 
 # Environment Awareness
 - The pipeline behavior is controlled by the ENV variable:
-ENV	Behavior
-local	    -->    Creates mock databases
-dev/prod	-->    Uses existing data sources
+  ENV	Behavior
+  local	    -->    Creates mock databases
+  dev/prod	-->    Uses existing data sources
 
 # Output
 - Daily Excel report: report_YYYYMMDD.xlsx
@@ -73,3 +73,4 @@ dev/prod	-->    Uses existing data sources
 
 # Author
 Adrianna Beblowska
+
