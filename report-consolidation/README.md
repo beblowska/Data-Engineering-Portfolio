@@ -37,25 +37,14 @@ The solution is designed to be:
 5. Generate formatted Excel report  
 6. Orchestrate daily execution with Airflow  
 
-## Repository Structure
-report-consolidation/
-├── dags/
-│ └── files_consolidation_dag.py
-├── jobs/
-│ └── files_consolidation.py
-├── data/
-│ └── sample_outputs/
-├── requirements.txt
-└── README.md
-
 # Airflow Execution
 - The DAG report_comparison runs daily.
 - Secrets are retrieved via Airflow Connections (excel_report_db) using a Secrets Backend (e.g., CyberArk).
 
 # Environment Awareness
 - The pipeline behavior is controlled by the ENV variable:
-  ENV	Behavior
-  local	    -->    Creates mock databases
+- ENV	Behavior
+  local	    -->    Creates mock databases  || 
   dev/prod	-->    Uses existing data sources
 
 # Output
@@ -73,4 +62,5 @@ report-consolidation/
 
 # Author
 Adrianna Beblowska
+
 
