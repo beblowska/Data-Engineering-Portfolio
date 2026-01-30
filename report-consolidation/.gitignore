@@ -3,3 +3,4 @@ venv/
 __pycache__/
 *.sqlite
 *.xlsx
+!report-consolidation/data/sample_outputs/*.xlsx
