@@ -1,0 +1,46 @@
+column_mapping:
+  # Team A -> standard
+  id: record_id
+  tradeDate: trade_date
+  cpty: counterparty
+  instr: instrument
+  qty: quantity
+  price: price
+  curr: currency
+  country: country
+  expiry: expiry_date
+  source: source_system
+  # Team B -> standard
+  record_id: record_id
+  trade_date: trade_date
+  counterparty: counterparty
+  instrument: instrument
+  quantity: quantity
+  price: price
+  currency: currency
+  country: country
+  expiry_date: expiry_date
+  source_system: source_system
+
+expected_columns:
+  - record_id
+  - trade_date
+  - counterparty
+  - instrument
+  - quantity
+  - price
+  - currency
+  - country
+  - expiry_date
+  - source_system
+
+blocked_ids: ["DVS", "VSE", "EFT", "PFD"]
+blocked_countries: ["KR", "SE", "ML", "GB"]
+
+currency_format:
+  type: uppercase
+  length: 3
+
+num_columns: 10
+
+date_format: "%Y-%m-%d"

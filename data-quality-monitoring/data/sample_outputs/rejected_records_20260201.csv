@@ -1,0 +1,9 @@
+input_row_number,record_id,trade_date,counterparty,instrument,quantity,price,currency,country,expiry_date,source_system,_rejection_reason,source_file
+2,A124,2025-01-20,,BOND,200.0,101.2,EUR,GB,2025-02-10,VENDOR_X,blocked_country;null_values,team_a_vendor_x.csv
+9,1005,2026-01-05,MNO_BANK,BOND_B,250.0,100.0,EU,FR,2026-08-20,Vendor_X,invalid_currency,team_a_vendor_x.csv
+11,1007,2026-01-07,STU_BANK,BOND_D,180.0,102.3,GBP,GB,2026-06-30,Vendor_X,blocked_country,team_a_vendor_x.csv
+12,1008,,VWX_BANK,BOND_E,210.0,99.9,USD,US,2026-05-31,Vendor_X,invalid_date_format;null_values,team_a_vendor_x.csv
+13,1009,2026-01-09,YZA_BANK,BOND_F,,101.0,USD,US,2026-04-30,Vendor_X,null_values,team_a_vendor_x.csv
+16,1011,2026-01-11,CDE_BANK,BOND_H,220.0,104.0,USD,SE,2026-02-28,Vendor_X,blocked_country,team_a_vendor_x.csv
+17,1012,2026-01-12,EFG_BANK,BOND_I,160.0,98.2,PLN,PL,,Vendor_X,invalid_date_format;null_values,team_a_vendor_x.csv
+20,1015,2026-01-15,NOP_BANK,BOND_L,155.0,101.5,USD,KR,2026-01-13,Vendor_X,blocked_country,team_a_vendor_x.csv
