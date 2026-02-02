@@ -118,7 +118,7 @@ Below sample input CSV file.
 
 # Outcome
 - Automated validation of vendor reports
-- RReduced manual reporting effort by approximately 1–1.5 hours per day per team
+- Reduced manual reporting effort by approximately 1–1.5 hours per day per team
 - ~90% reduction in human errors
 - ~30–40% faster downstream processing
 - Clear feedback loop for vendors
@@ -131,6 +131,7 @@ Below sample input CSV file.
   
 # Author
 Adrianna Beblowska
+
 
 
 
