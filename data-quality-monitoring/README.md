@@ -92,6 +92,11 @@ Each run:
 - ingests new vendor reports
 - applies schema mapping and quality checks
 - generates output and rejected records
+
+# Sample Input
+Below sample input CSV file.
+
+![Sample Input File](screenshots/sample_input_file.png)
   
 # Output
 ### Standardized Output
@@ -99,7 +104,8 @@ Each run:
 - Consistent column order
 - Clean, validated data
 - Ready for analytics or further ETL
-[sample]
+
+![Clean Report](screenshots/sample_output.png)
 
 ### Rejected Records
 - Invalid rows are **not silently dropped**
@@ -108,7 +114,7 @@ Each run:
   - vendor identifier
   - human-readable rejection reason
     
-![Excel Report Preview](data-quality-monitoring/screenshots/rejected_records.png)
+![Rejected Records](screenshots/rejected_records.png)
 
 # Outcome
 - Automated validation of vendor reports
@@ -125,6 +131,7 @@ Each run:
   
 # Author
 Adrianna Beblowska
+
 
 
 
