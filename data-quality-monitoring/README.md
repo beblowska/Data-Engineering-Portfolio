@@ -105,7 +105,7 @@ Below sample input CSV file.
 - Clean, validated data
 - Ready for analytics or further ETL
 
-![Clean Report](screenshots/sample_output.png)
+![Clean Report](screenshots/clean_report.png)
 
 ### Rejected Records
 - Invalid rows are **not silently dropped**
@@ -131,6 +131,7 @@ Below sample input CSV file.
   
 # Author
 Adrianna Beblowska
+
 
 
 
