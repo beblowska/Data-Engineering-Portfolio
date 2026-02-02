@@ -73,8 +73,8 @@ data-quality-monitoring/
 │       ├── clean_report.csv
 │       └── rejected_records.csv
 ├── screenshots/
-│   ├── airflow_dag.png
-│   ├── output_preview.png
+│   ├── sample_input_file.png
+│   ├── clear_report.png
 │   └── rejected_records.png
 ├── requirements.txt
 └── README.md
@@ -108,7 +108,7 @@ Each run:
   - vendor identifier
   - human-readable rejection reason
     
-![Excel Report Preview](data/sample_outputs/report_20260125_preview.png)
+![Excel Report Preview](data-quality-monitoring/screenshots/rejected_records.png)
 
 # Outcome
 - Automated validation of vendor reports
@@ -125,6 +125,7 @@ Each run:
   
 # Author
 Adrianna Beblowska
+
 
 
 
