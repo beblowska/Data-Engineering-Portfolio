@@ -1,0 +1,23 @@
+__pycache__/
+*.pyc
+
+# data files
+*.csv
+*.xlsx
+*.parquet
+
+# aws installer
+*.pkg
+
+# logs
+logs/
+*.log
+
+# terraform (future)
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+
+# secrets
+.aws/
+.env
