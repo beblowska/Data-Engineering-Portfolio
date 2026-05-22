@@ -2,7 +2,7 @@ from src.extract import extract_data
 from src.validate import validate_data
 from src.transform import transform_data
 from src.load import load_data
-
+from src.data_quality import data_quality_report
 from src.logger import get_logger
 from src.config_loader import load_config
 from src.retry import retry
@@ -24,6 +24,9 @@ def run_pipeline():
 
         logger.info("Transforming data...")
         df = transform_data(df)
+
+        report = data_quality_report(df)
+        logger.info(f"DATA QUALITY REPORT: {report}")
 
         logger.info("Loading data...")
         retry(lambda: load_data(

@@ -1,11 +1,12 @@
 import boto3
-from datetime import datetime
+from src.idempotency import generate_run_id
 
 def load_data(df, output_file, bucket, prefix):
     s3 = boto3.client("s3")
 
-    timestamp = datetime.now().strftime("%Y-%m-%d")
-    s3_key = f"{prefix}{timestamp}/{output_file}"
+    run_id = generate_run_id(df)
+
+    s3_key = f"{prefix}run_id={run_id}/{output_file}"
 
     df.to_parquet(output_file, index=False)
 
