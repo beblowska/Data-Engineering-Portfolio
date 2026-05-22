@@ -2,9 +2,9 @@
 
 ## Overview
 
-This project is a cloud-style ETL (Extract, Transform, Load) pipeline built in Python.
-
-It simulates a real-world data engineering workflow where raw transactional data is processed, validated, transformed, and stored in a cloud data lake (AWS S3) in an optimized format (Parquet).
+This project is a modular ETL (Extract, Transform, Load) pipeline built in Python.
+It processes raw transaction data, validates it, transforms it into analytics-ready format, and loads it into AWS S3 in Parquet format.
+The goal of this project is to simulate a production-style data engineering workflow with cloud integration.
 
 The goal of this project is to demonstrate practical data engineering skills including:
 - ETL pipeline design
@@ -18,51 +18,60 @@ The goal of this project is to demonstrate practical data engineering skills inc
 
 ## Architecture
 
-Raw CSV → Extract → Validate → Transform → Parquet → AWS S3 (processed zone)
+CSV (raw data)
+      ↓
+Extract (pandas)
+      ↓
+Validate (schema + quality checks)
+      ↓
+Transform (cleaning + enrichment)
+      ↓
+Parquet file
+      ↓
+AWS S3 upload
+
 
 ## Tech Stack
 
-- Python 3.11+
+- Python 3.10+
 - Pandas
 - Boto3 (AWS SDK)
-- Apache Arrow (PyArrow)
-- AWS S3 (data storage)
+- AWS S3
+- Parquet (PyArrow)
+
 
 ## Features
 
-### ETL Pipeline
-- Extracts transaction data from CSV
-- Applies validation rules
-- Transforms and cleans dataset
-- Loads processed data into AWS S3
+- Modular ETL architecture (extract / transform / validate / load)
+- CSV ingestion with custom parsing
+- Data validation layer (schema + null checks)
+- Data transformations:
+   - type casting
+   - filtering transactions
+   - feature engineering (fee calculation)
+   - text normalization
+- Output format: Parquet
+- AWS S3 integration using boto3
+- Production-style pipeline execution flow
 
-### Data Quality
-- Schema validation (required columns check)
-- Null value detection
-- Data type normalization
-
-### Transformations
-- Filter only `COMPLETED` transactions
-- Convert `amount` to numeric type
-- Calculate transaction fee (2%)
-- Standardize merchant names (uppercase)
-- Remove duplicates
-- Convert date strings to datetime format
-
-### Output Optimization
-- Stores data in Parquet format (columnar, compressed, analytics-friendly)
-- Uploads processed dataset to AWS S3
-
-## AWS Integration
-
-The pipeline uses:
-
-- AWS S3 bucket for storage
-- boto3 for programmatic access
-- IAM credentials configured via AWS CLI (`aws configure`)
-
----
-
+## Project Structure
+```
+cloud_etl_pipeline/
+│
+├── main.py
+├── requirements.txt
+├── data/
+│   └── sample_data.csv
+│
+├── src/
+│   ├── extract.py
+│   ├── transform.py
+│   ├── validate.py
+│   ├── load.py
+│   └── config.py
+│
+└── README.md
+```
 ## Data Flow
 
 1. **Extract**
@@ -92,37 +101,60 @@ The pipeline uses:
 ## How to Run
 
 ### 1. Install dependencies
-pip install pandas boto3 pyarrow
+pip install -r requirements.txt
 
 ### 2. Configure AWS credentials
-aws configure
+Make sure you have AWS CLI configured:
+   aws configure
+
+Required permissions:
+- s3:PutObject
+- s3:ListBucket
 
 ### 3. Run pipeline
-python3 data.py
+python3 main.py
 
 
-## Output
-- Clean dataset in Parquet format
-- Uploaded to AWS S3 bucket:
-s3://<data-pipeline>/processed/
+## Example Output Flow
+
+PIPELINE STARTED
+Extracting data...
+Validating data...
+Transforming data...
+Saving parquet file...
+Uploading to S3...
+PIPELINE SUCCESS
 
 
-## Learning Outcomes
-- This project demonstrates:
-- Building modular ETL pipelines in Python
-- Working with real-world data transformation logic
-- Integrating with cloud services (AWS S3)
-- Using Parquet for efficient data storage
-- Structuring production-like data engineering code
+## Data Validation Rules
+
+- Required columns must exist
+- No null values allowed
+- Transaction status filtering (e.g. COMPLETED only)
+
+
+## Transformations
+
+- Convert amount → float
+- Compute transaction fee (2%)
+- Normalize merchant names (uppercase)
+- Filter only valid transactions
+
+
+## Cloud Component
+
+Data is uploaded to AWS S3:
+s3://<bucket-name>/processed/transactions_cleaned.parquet
 
 
 ## Future Improvements
+
 - Add Apache Airflow orchestration
-- Add retry mechanism and idempotency
-- Add data quality framework (e.g. Great Expectations)
-- Dockerize pipeline
-- Add Terraform infrastructure provisioning
-- Add CI/CD via GitHub Actions
+- Add Terraform for infrastructure provisioning (S3, IAM)
+- Add retry mechanism + idempotency
+- Add logging & monitoring (CloudWatch)
+- Add data partitioning strategy
+- Move to Spark for scalability
 
 
 ## Author
