@@ -2,57 +2,80 @@
 
 ## Overview
 
-This project is a modular ETL (Extract, Transform, Load) pipeline built in Python.
-It processes raw transaction data, validates it, transforms it into analytics-ready format, and loads it into AWS S3 in Parquet format.
-The goal of this project is to simulate a production-style data engineering workflow with cloud integration.
+This project is a production-style ETL pipeline that processes raw transaction data, validates it, transforms it into analytics-ready format, and loads it into AWS S3.
+The infrastructure (S3 bucket) is managed using Terraform (Infrastructure as Code), and the data processing is implemented in Python (Pandas-based pipeline).
 
-The goal of this project is to demonstrate practical data engineering skills including:
-- ETL pipeline design
-- Data validation
-- Data transformation
-- Cloud storage integration (AWS S3)
-- Efficient file formats (Parquet)
-- Logging and observability
+
+## What this project simulates
+
+This pipeline simulates a simplified version of a real data platform used in companies like fintechs or e-commerce systems.
+In real life, it would work like this:
+
+Transaction systems / apps
+        ↓
+Raw data landing (CSV / API / DB extract)
+        ↓
+ETL pipeline (this project)
+        ↓
+Clean + validated dataset
+        ↓
+Cloud storage (AWS S3)
+        ↓
+Analytics tools (Athena / BI / ML models)
+
 
 ---
 
+
 ## Architecture
-
-CSV (raw data)
-      ↓
-Extract (pandas)
-      ↓
-Validate (schema + quality checks)
-      ↓
-Transform (cleaning + enrichment)
-      ↓
-Parquet file
-      ↓
-AWS S3 upload
-
+```
+              ┌──────────────────────┐
+              │  Raw CSV Data        │
+              └─────────┬────────────┘
+                        ↓
+              ┌──────────────────────┐
+              │ Extract (Pandas)     │
+              └─────────┬────────────┘
+                        ↓
+              ┌──────────────────────┐
+              │ Validate Layer       │
+              │ - schema check       │
+              │ - null checks        │
+              └─────────┬────────────┘
+                        ↓
+              ┌──────────────────────┐
+              │ Transform Layer      │
+              │ - type casting       │
+              │ - filtering          │
+              │ - feature engineering│
+              └─────────┬────────────┘
+                        ↓
+              ┌──────────────────────┐
+              │ Parquet Output       │
+              └─────────┬────────────┘
+                        ↓
+              ┌──────────────────────┐
+              │ AWS S3 (Terraform)   │
+              └──────────────────────┘
+```
 
 ## Tech Stack
 
-- Python 3.10+
+- Python 3
 - Pandas
-- Boto3 (AWS SDK)
 - AWS S3
+- Boto3
+- Terraform (IaC)
 - Parquet (PyArrow)
 
 
-## Features
+## End-to-End Flow
 
-- Modular ETL architecture (extract / transform / validate / load)
-- CSV ingestion with custom parsing
-- Data validation layer (schema + null checks)
-- Data transformations:
-   - type casting
-   - filtering transactions
-   - feature engineering (fee calculation)
-   - text normalization
-- Output format: Parquet
-- AWS S3 integration using boto3
-- Production-style pipeline execution flow
+1. Raw CSV file is loaded
+2. Data is validated (schema + quality checks)
+3. Data is transformed (cleaning + enrichment)
+4. Output is saved as Parquet file
+5. File is uploaded to AWS S3 bucket (created via Terraform)
 
 ## Project Structure
 ```
@@ -72,22 +95,24 @@ cloud_etl_pipeline/
 │
 └── README.md
 ```
+
 ## Data Flow
 
 1. **Extract**
-   - Load CSV file into Pandas DataFrame
+   - Reads raw CSV data
+   - Parses transaction dataset
 
-2. **Validate**
+3. **Validate**
    - Check required columns
    - Validate data integrity
 
-3. **Transform**
+4. **Transform**
    - Clean and standardize data
    - Apply business rules
 
-4. **Load**
+5. **Load**
    - Save as Parquet file
-   - Upload to AWS S3 bucket under `processed/`
+   - Upload to AWS S3 bucket 
 
 
 ## Example Business Logic
@@ -98,63 +123,40 @@ cloud_etl_pipeline/
 - Merchant names are normalized to uppercase
 - Duplicate records are removed
 
+
 ## How to Run
 
 ### 1. Install dependencies
 pip install -r requirements.txt
 
 ### 2. Configure AWS credentials
-Make sure you have AWS CLI configured:
-   aws configure
+aws configure
 
-Required permissions:
-- s3:PutObject
-- s3:ListBucket
+### 3. Run Terraform (infrastructure)
+cd infra
+terraform init
+terraform apply
 
-### 3. Run pipeline
+### 4. Run pipeline
 python3 main.py
-
-
-## Example Output Flow
-
-PIPELINE STARTED
-Extracting data...
-Validating data...
-Transforming data...
-Saving parquet file...
-Uploading to S3...
-PIPELINE SUCCESS
-
-
-## Data Validation Rules
-
-- Required columns must exist
-- No null values allowed
-- Transaction status filtering (e.g. COMPLETED only)
-
-
-## Transformations
-
-- Convert amount → float
-- Compute transaction fee (2%)
-- Normalize merchant names (uppercase)
-- Filter only valid transactions
 
 
 ## Cloud Component
 
-Data is uploaded to AWS S3:
-s3://<bucket-name>/processed/transactions_cleaned.parquet
+- Clean dataset (Parquet format)
+- Uploaded to S3 bucket:
+      s3://data-etl-pipeline-bucket/processed/
 
 
 ## Future Improvements
 
 - Add Apache Airflow orchestration
-- Add Terraform for infrastructure provisioning (S3, IAM)
-- Add retry mechanism + idempotency
-- Add logging & monitoring (CloudWatch)
-- Add data partitioning strategy
-- Move to Spark for scalability
+- Add retry + idempotency logic
+- Add logging (CloudWatch / Python logging)
+- Add data partitioning in S3
+- Add AWS Glue + Athena layer
+- Add CI/CD (GitHub Actions)
+- Replace Pandas with Spark for scale
 
 
 ## Author
