@@ -6,6 +6,9 @@ __pycache__/
 *.xlsx
 *.parquet
 
+# keep sample dataset
+!data/sample_data.csv
+
 # aws installer
 *.pkg
 
@@ -13,7 +16,7 @@ __pycache__/
 logs/
 *.log
 
-# terraform (future)
+# terraform
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
@@ -21,3 +24,9 @@ terraform.tfstate.backup
 # secrets
 .aws/
 .env
+
+# mac
+.DS_Store
+
+# outputs
+output/
