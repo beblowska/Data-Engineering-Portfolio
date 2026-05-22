@@ -2,8 +2,8 @@
 
 ## Overview
 
-This project is a production-style ETL pipeline that processes raw transaction data, validates it, transforms it into analytics-ready format, and loads it into AWS S3.
-The infrastructure (S3 bucket) is managed using Terraform (Infrastructure as Code), and the data processing is implemented in Python (Pandas-based pipeline).
+This project is a production-style data engineering pipeline that processes raw transaction data, validates it, transforms it, and loads it into AWS S3 using a reproducible infrastructure defined in Terraform.
+It simulates a real-world cloud data ingestion system used in modern data platforms.
 
 
 ## What this project simulates
@@ -51,6 +51,15 @@ Analytics tools (Athena / BI / ML models)
               └─────────┬────────────┘
                         ↓
               ┌──────────────────────┐
+              │ Data Quality Checks  │
+              └─────────┬────────────┘
+                        ↓
+              ┌──────────────────────┐
+              │ Idempotent Processing│ 
+              │      (run_id)        │
+              └─────────┬────────────┘
+                        ↓
+              ┌──────────────────────┐
               │ Parquet Output       │
               └─────────┬────────────┘
                         ↓
@@ -58,6 +67,7 @@ Analytics tools (Athena / BI / ML models)
               │ AWS S3 (Terraform)   │
               └──────────────────────┘
 ```
+
 
 ## Tech Stack
 
@@ -67,7 +77,7 @@ Analytics tools (Athena / BI / ML models)
 - Boto3
 - Terraform (IaC)
 - Parquet (PyArrow)
-
+- PyYAML (config management)
 
 ## End-to-End Flow
 
@@ -77,43 +87,62 @@ Analytics tools (Athena / BI / ML models)
 4. Output is saved as Parquet file
 5. File is uploaded to AWS S3 bucket (created via Terraform)
 
+
+## Key Features
+
+1. ETL Pipeline
+   - Extracts transaction data from CSV
+   - Cleans and transforms dataset
+   - Generates derived metrics (e.g. transaction fee)
+2. Data Validation
+   - Schema validation
+   - Null checks
+   - Data integrity checks
+3. Data Quality Monitoring
+   - Row count tracking
+   - Null value detection
+   - Duplicate detection
+4. Idempotency
+   - Each pipeline run generates a unique run_id
+   - Prevents overwriting data in S3
+   - Ensures traceability
+5. Reliability
+   - Retry mechanism for failed operations
+   - Structured logging for observability
+6. Cloud Infrastructure
+   - AWS S3 bucket provisioned via Terraform
+   - Versioned and reproducible infrastructure
+
+
 ## Project Structure
 ```
 cloud_etl_pipeline/
 │
 ├── main.py
 ├── requirements.txt
+├── config.yaml
+│
 ├── data/
 │   └── sample_data.csv
+│
+├── infra/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   └── .terraform.lock.hcl
 │
 ├── src/
 │   ├── extract.py
 │   ├── transform.py
 │   ├── validate.py
 │   ├── load.py
-│   └── config.py
+│   ├── config_loader.py
+│   ├── logger.py
+│   ├── retry.py
+│   └── idempotency.py
 │
 └── README.md
 ```
-
-## Data Flow
-
-1. **Extract**
-   - Reads raw CSV data
-   - Parses transaction dataset
-
-3. **Validate**
-   - Check required columns
-   - Validate data integrity
-
-4. **Transform**
-   - Clean and standardize data
-   - Apply business rules
-
-5. **Load**
-   - Save as Parquet file
-   - Upload to AWS S3 bucket 
-
 
 ## Example Business Logic
 
@@ -145,18 +174,17 @@ python3 main.py
 
 - Clean dataset (Parquet format)
 - Uploaded to S3 bucket:
-      s3://data-etl-pipeline-bucket/processed/
+      s3://data-etl-pipeline-bucket-12345/processed/run_id=abc123/transactions_cleaned.parquet
 
 
 ## Future Improvements
 
-- Add Apache Airflow orchestration
-- Add retry + idempotency logic
-- Add logging (CloudWatch / Python logging)
-- Add data partitioning in S3
-- Add AWS Glue + Athena layer
-- Add CI/CD (GitHub Actions)
-- Replace Pandas with Spark for scale
+- Airflow orchestration (scheduled pipelines)
+- AWS Glue integration
+- Athena analytics layer
+- CI/CD with GitHub Actions
+- Data partition optimization (year/month/day)
+- Migration to Spark for scalability
 
 
 ## Author
