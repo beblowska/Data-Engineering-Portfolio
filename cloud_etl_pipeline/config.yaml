@@ -1,0 +1,7 @@
+input_file: data/sample_data.csv
+output_file: transactions_cleaned.parquet
+
+s3_bucket: data-etl-pipeline-bucket-12345
+s3_prefix: processed/
+
+retry_count: 3

@@ -1,19 +1,14 @@
 import boto3
+from datetime import datetime
 
-def load_data(df, output_path: str, bucket_name: str):
-    print("Saving parquet file...")
-
-    # save locally as parquet
-    df.to_parquet(output_path, index=False)
-
-    print("Uploading to S3...")
-
+def load_data(df, output_file, bucket, prefix):
     s3 = boto3.client("s3")
 
-    s3.upload_file(
-        output_path,
-        bucket_name,
-        f"processed/{output_path}"
-    )
+    timestamp = datetime.now().strftime("%Y-%m-%d")
+    s3_key = f"{prefix}{timestamp}/{output_file}"
 
-    print("Upload completed")
+    df.to_parquet(output_file, index=False)
+
+    s3.upload_file(output_file, bucket, s3_key)
+
+    print(f"Uploaded to s3://{bucket}/{s3_key}")
