@@ -13,15 +13,15 @@ REQUIRED_COLUMNS = [
 ]
 
 def validate_data(df: pd.DataFrame) -> bool:
-    print("Validating data...")
+    missing = [c for c in REQUIRED_COLUMNS if c not in df.columns]
 
-    missing_cols = [col for col in REQUIRED_COLUMNS if col not in df.columns]
+    if missing:
+        raise ValueError(f"Missing columns: {missing}")
 
-    if missing_cols:
-        raise ValueError(f"Missing columns: {missing_cols}")
+    if df.empty:
+        raise ValueError("Dataset is empty")
 
     if df.isnull().any().any():
-        raise ValueError("Dataset contains null values")
+        raise ValueError("Null values detected")
 
-    print("Validation passed")
     return True
