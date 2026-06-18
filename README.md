@@ -1,15 +1,30 @@
 # Data Engineering Portfolio
 
-## Cloud Data Engineering | Data Quality | Automation | Governance-Focused Design
+## Cloud Data Engineering | Data Platforms | Data Quality | Workflow Orchestration | AWS | Terraform | ETL Systems
 
-This repository showcases production-inspired data engineering projects focused on building reliable, automated, and scalable data systems.
+This repository showcases production-inspired data engineering systems built around reliability, scalability, and data quality.
 
-The emphasis is not only on moving data, but on ensuring that data is:
-- validated
-- standardized
-- auditable
-- reproducible
-- safe for downstream consumption
+The projects are designed to reflect real-world enterprise data engineering patterns, based on experience in financial and large-scale data environments.
+
+---
+
+# ⭐ Flagship Project
+
+## Cloud ETL Pipeline (AWS S3 + Python + Terraform)
+
+A production-inspired cloud data pipeline simulating a modern data lake architecture.
+
+### Core capabilities:
+- AWS S3-based data lake architecture (landing + processed zones)
+- Python-based ETL processing layer
+- Data validation and quality enforcement (schema, nulls, business rules)
+- Idempotent execution using run-based processing isolation
+- Parquet-based optimized storage for analytical workloads
+- Infrastructure-as-Code using Terraform
+
+This project demonstrates end-to-end cloud data pipeline design inspired by enterprise data platforms.
+
+👉 https://github.com/beblowska/Data-Engineering-Portfolio/tree/main/cloud_etl_pipeline
 
 ---
 
@@ -26,289 +41,114 @@ Modern data platforms fail not due to lack of pipelines, but due to:
 This portfolio demonstrates how structured data engineering practices can solve these problems through automation, validation, and cloud-based architecture patterns.
 
 ---
+# Supporting Projects
 
-## Engineering Impact (Simulation-Based)
+## Data Quality Monitoring & Vendor Validation
 
-These projects simulate real-world enterprise data challenges and demonstrate measurable engineering improvements:
+A config-driven data quality framework designed to enforce schema consistency and data quality rules across external vendor datasets.
 
-- 60–80% reduction in manual validation effort
-- ~90% reduction in human data errors in reporting workflows
-- Faster onboarding of external vendors via config-driven validation
-- Elimination of silent data quality failures through explicit rejection tracking
-- Reduced operational overhead through automation and orchestration
-
----
-
-## Core Engineering Principles
-
-Across all projects, the following principles are consistently applied:
-
-- Config-driven design (YAML-based business rules)
-- Environment-aware execution (local / dev / prod patterns)
-- Idempotent and deterministic processing
-- Explicit validation before transformation
-- Separation of ingestion, processing, and output layers
-- Audit-ready outputs with traceable data lineage
-- Automation-first workflow design
+Focus areas:
+- schema standardization via YAML configuration
+- deterministic validation rules
+- rejection tracking with full traceability
+- automated pipeline execution (Airflow-based design)
 
 ---
 
-# Projects
+## Multi-Source Reporting Pipeline
+
+A cross-system reporting pipeline that consolidates data from multiple SQL sources into a unified business-ready Excel output.
+
+Focus areas:
+- multi-source data extraction and normalization
+- business rule validation layer
+- automated reporting generation
+- orchestration via Airflow concepts
+- Excel as a controlled delivery layer
 
 ---
 
-## 1. Cloud ETL Pipeline (AWS S3 + Terraform)
+# Core Engineering Principles
 
-### Overview
+Across all projects, I apply the following principles:
 
-A cloud-based ETL pipeline simulating a production data lake ingestion system using AWS S3 and Infrastructure as Code (Terraform).
-
-The pipeline processes raw transactional CSV data, applies validation and transformation rules, and stores clean outputs in a structured cloud data lake format.
-
----
-
-### Business Problem
-
-Organizations need reliable pipelines to process transactional data while ensuring:
-
-- data quality enforcement
-- reproducibility of processing
-- safe storage in cloud environments
-- idempotent execution without duplication
+- Data is treated as untrusted by default
+- Validation occurs before transformation
+- Pipelines are deterministic and idempotent
+- Configuration is externalized (YAML-driven design)
+- Clear separation of ingestion, processing, and output layers
+- Auditability and traceability are first-class design goals
+- Cloud storage is treated as the system of record (S3-based design)
 
 ---
 
-### Solution
+# Common Architecture Pattern
 
-The pipeline:
-
-- ingests raw CSV data
-- validates schema and data integrity
-- transforms and enriches datasets
-- applies idempotent processing via run_id
-- outputs data in Parquet format
-- stores results in AWS S3 (data lake structure)
-- provisions infrastructure using Terraform
-
----
-
-### Architecture
-
-Raw Data → AWS S3 (Landing Zone) → Python ETL → Validation Layer → Transformation Layer → Idempotency Layer → Parquet Output → AWS S3 (Processed Zone)
-
----
-
-### Tech Stack
-
-Python, Pandas, AWS S3, Terraform, Boto3, PyArrow, PyYAML
-
----
-
-### Key Features
-
-- Data validation (schema, null checks, integrity rules)
-- Idempotent processing (run-based isolation)
-- Parquet optimized outputs
-- Infrastructure as Code (Terraform-managed AWS S3)
-- Reproducible pipeline execution
-
----
-
-### Engineering Focus
-
-- Cloud storage-first design
-- Stateless ETL processing model
-- Audit-friendly execution flow
-- Production-inspired data architecture
-
----
-
-## 2. Data Quality Monitoring & Vendor Validation
-
-### Overview
-
-A config-driven data quality framework designed to validate and standardize vendor-delivered datasets before downstream processing.
-
----
-
-### Business Problem
-
-External vendors deliver inconsistent data with:
-
-- different schemas
-- inconsistent naming conventions
-- varying formats (dates, currencies)
-- missing or duplicate records
-
-Manual validation is slow, error-prone, and not scalable.
-
----
-
-### Solution
-
-The pipeline:
-
-- validates incoming vendor datasets
-- enforces schema standardization via YAML rules
-- applies data quality checks (nulls, duplicates, formats)
-- separates valid and rejected records
-- generates traceable rejection reports
-
----
-
-### Tech Stack
-
-Python, Pandas, YAML, Apache Airflow
-
----
-
-### Key Features
-
-- Schema standardization via configuration
-- Deterministic validation rules
-- Rejection tracking with explanations
-- Fully automated execution via Airflow
-- Clean downstream-ready dataset generation
-
----
-
-### Engineering Focus
-
-- Data quality enforcement layer
-- Config-driven validation architecture
-- Traceable rejection pipeline design
-- Deterministic and repeatable processing
-
----
-
-## 3. Report Consolidation Pipeline (Multi-Source SQL + Excel Automation)
-
-### Overview
-
-A cross-source reporting pipeline that consolidates data from multiple SQL databases into a unified, business-ready Excel report.
-
----
-
-### Business Problem
-
-Organizations often rely on manual report consolidation from multiple systems, leading to:
-
-- inconsistent schemas across databases
-- repetitive manual Excel processing
-- high risk of human error
-- lack of scalability
-
----
-
-### Solution
-
-The pipeline:
-
-- extracts data from multiple SQL sources (SQLite simulation)
-- normalizes schemas across systems
-- validates key business rules (e.g. expiry logic)
-- detects inconsistencies (e.g. currency mismatches)
-- generates formatted Excel reports with validation rules
-- automates execution using Airflow
-
----
-
-### Tech Stack
-
-Python, Pandas, SQL (SQLite), Apache Airflow, openpyxl
-
----
-
-### Key Features
-
-- Multi-source data extraction
-- Schema normalization across systems
-- Business rule validation (e.g. expiry thresholds)
-- Conditional formatting in Excel outputs
-- Environment-aware execution (local / dev / prod simulation)
-
----
-
-### Engineering Focus
-
-- Cross-system data integration
-- Reporting automation
-- Separation of business logic and orchestration
-- Excel as a delivery layer (not processing layer)
-
----
-
-## Common Architecture Pattern
-
-All projects follow a consistent layered structure:
+Each project follows a layered structure:
 
 project/
-│
 ├── configs/        # Environment-specific rules (YAML)
 ├── data/
 │   ├── inputs/     # Raw untrusted data
 │   └── outputs/    # Processed validated data
 ├── jobs/           # Business logic layer
-├── dags/           # Orchestration (Airflow)
-│
-Raw data is always treated as untrusted.
-All transformations are explicit, deterministic, and validated before downstream use.
+├── dags/           # Orchestration layer (Airflow concepts)
 
 ---
 
-## Environment Design
+# Environment Design
 
 Each pipeline supports environment-aware execution:
 
-- Local development
+- Local development mode
 - Testing / staging simulation
-- Production-like execution mode
+- Production-like execution patterns
 
-Configuration is externalized to ensure reproducibility and avoid environment leakage.
-
----
-
-## Output Principles
-
-All outputs across projects follow:
-
-- Clean schema consistency
-- Deduplication where applicable
-- Downstream-ready structure
-- Audit-friendly traceability
-- Explicit rejection handling instead of silent failures
+Configuration is externalized to ensure reproducibility and prevent environment coupling.
 
 ---
 
-## Engineering Controls
+# Engineering Controls
 
-### Data Controls
+## Data Controls
 - Schema enforcement
 - Null and duplicate validation
-- Format standardization
+- Data standardization rules
 
-### Operational Controls
+## Operational Controls
 - Idempotent execution patterns
 - Config-driven pipeline behavior
-- Clear separation of concerns
+- Separation of concerns
 
-### Cloud & Automation Controls
-- AWS S3-based data lake design
+## Cloud & Automation Controls
+- AWS S3-based data lake architecture
 - Terraform-based infrastructure provisioning
-- Airflow orchestration for scheduling
+- Airflow-based orchestration design patterns
 
 ---
 
-## What This Portfolio Demonstrates
+# What This Portfolio Demonstrates
 
-This portfolio reflects practical Data Engineering capabilities with emphasis on:
+This portfolio reflects practical Data Engineering capabilities across:
 
-- cloud-inspired data architecture design
-- data reliability and validation systems
-- automation-first engineering mindset
-- cross-system data integration
-- governance-aligned data processing
-- production-style workflow structuring
+- Cloud-based data platform design (AWS)
+- ETL/ELT pipeline engineering (Python + SQL)
+- Data quality & validation systems
+- Workflow orchestration (Airflow concepts)
+- Infrastructure automation (Terraform)
+- Cross-system data integration
+
+---
+
+# Professional Context
+
+These projects are inspired by real-world enterprise systems built in financial and e-commerce environments, including experience at Citi Bank Europe and Amazon Development Center.
+
+---
+
+# Goal
+
+To design production-grade data systems that are reliable, observable, and scalable in modern cloud environments.
 
 ---
 
